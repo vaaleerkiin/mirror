@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting…</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 40px;
+      }
+      .hidden {
+        display: none;
+      }
+      button {
+        padding: 10px 18px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Redirecting…</h2>
+    <p id="status">Please wait while we redirect you.</p>
+
+    <button id="manualBtn" class="hidden">Continue manually</button>
+
+    <noscript>
+      <p>JavaScript is disabled.</p>
+      <!-- ----------------------------------------------------------------------------------------------------- -->
+      <a
+        href="https://drive.google.com/drive/u/0/folders/1EoVbvrO1yl08pZKsYVzIOB9GTlSmJzRM"
+        >Continue</a
+      >
+      <!-- ----------------------------------------------------------------------------------------------------- -->
+    </noscript>
+
+    <script>
+      // --------------------------------------------------------------------------------------------------------
+      const REDIRECT_URL =
+        "https://drive.google.com/drive/u/0/folders/1EoVbvrO1yl08pZKsYVzIOB9GTlSmJzRM";
+      // --------------------------------------------------------------------------------------------------------
+      const TIMEOUT_MS = 5000;
+
+      const statusEl = document.getElementById("status");
+      const manualBtn = document.getElementById("manualBtn");
+
+      let redirected = false;
+
+      function showManualFallback(message) {
+        statusEl.textContent = message;
+        manualBtn.classList.remove("hidden");
+      }
+
+      manualBtn.addEventListener("click", () => {
+        window.location.href = REDIRECT_URL;
+      });
+
+      try {
+        setTimeout(() => {
+          if (!redirected) {
+            showManualFallback(
+              "Automatic redirect failed. Please continue manually."
+            );
+          }
+        }, TIMEOUT_MS);
+
+        window.location.replace(REDIRECT_URL);
+        redirected = true;
+      } catch (error) {
+        console.error("Redirect error:", error);
+        showManualFallback("An error occurred. Please continue manually.");
+      }
+    </script>
+  </body>
+</html>
